@@ -5,7 +5,7 @@
   "description": "A Flex work check in and out automation script written in typescript",
   "main": "dist/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test:health-check": "mocha -r ts-node/register/transpile-only ./test/health-check/*.test.ts",
     "start:dev": "tsc && node dist/index.js"
   },
   "repository": {
@@ -18,9 +18,16 @@
   },
   "homepage": "https://github.com/stevejkang/flex-work-check-in-out-automation#readme",
   "dependencies": {
-    "axios": "^0.21.1"
+    "axios": "^0.21.1",
+    "dotenv": "^10.0.0"
   },
   "devDependencies": {
+    "@types/chai": "^4.2.21",
+    "@types/mocha": "^9.0.0",
+    "@types/node": "^16.4.9",
+    "chai": "^4.3.4",
+    "mocha": "^9.0.3",
+    "ts-node": "^10.1.0",
     "typescript": "^4.3.5"
   }
 }
