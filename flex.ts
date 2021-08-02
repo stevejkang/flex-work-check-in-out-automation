@@ -65,6 +65,29 @@ class Flex {
       throw new FlexError('User Status Check Error');
     }
   }
+
+  public async checkIn(): Promise<void> {
+    const userTokenInfo = await this.login();
+    try {
+      await axios.post('https://amen.flex.team/actions/api/v1/users/me/work-check-in', {
+        date: dayjs(new Date()).format('YYYY-MM-DD'),
+        onTime: false,
+        minutesDiff: 0,
+        dryRun: false,
+        dayWorkBlockOption: {
+          restMinutes: 60,
+        },
+      }, {
+        headers: {
+          ...DEFAULT_HEADER,
+          'x-flex-aid': userTokenInfo.accessToken,
+          'x-flex-rid': userTokenInfo.refreshToken,
+        },
+      });
+    } catch (error) {
+      throw new FlexError('Check In Error');
+    }
+  }
 }
 
 class FlexError extends Error {
