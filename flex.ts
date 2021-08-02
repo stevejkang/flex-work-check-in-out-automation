@@ -40,10 +40,11 @@ class Flex {
       }, {
         headers: DEFAULT_HEADER,
       });
+
       return {
         accessToken: request.data.credentials.accessToken,
         refreshToken: request.data.credentials.refreshToken,
-      }
+      };
     } catch (error) {
       throw new FlexError('Authentication Error');
     }
@@ -57,7 +58,7 @@ class Flex {
           ...DEFAULT_HEADER,
           'x-flex-aid': userTokenInfo.accessToken,
           'x-flex-rid': userTokenInfo.refreshToken,
-        }
+        },
       });
       
       this.userStatus = request.data.data.status;
