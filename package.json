@@ -19,6 +19,7 @@
   "homepage": "https://github.com/stevejkang/flex-work-check-in-out-automation#readme",
   "dependencies": {
     "axios": "^0.21.1",
+    "dayjs": "^1.10.6",
     "dotenv": "^10.0.0"
   },
   "devDependencies": {

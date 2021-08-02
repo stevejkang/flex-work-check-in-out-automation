@@ -1,4 +1,5 @@
 import axios from 'axios';
+import dayjs from 'dayjs';
 
 interface IFlexToken {
   accessToken: String,
@@ -51,7 +52,7 @@ class Flex {
   private async userCheckInCheck(): Promise<void> {
     const userTokenInfo = await this.login();
     try {
-      const request = await axios.get('https://amen.flex.team/actions/api/v1/users/me/work-check-in-out?date=2021-07-26', { // TODO: Set to current date
+      const request = await axios.get(`https://amen.flex.team/actions/api/v1/users/me/work-check-in-out?date=${dayjs(new Date()).format('YYYY-MM-DD')}`, {
         headers: {
           ...DEFAULT_HEADER,
           'x-flex-aid': userTokenInfo.accessToken,
