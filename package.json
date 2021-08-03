@@ -5,8 +5,9 @@
   "description": "A Flex work check in and out automation script written in typescript",
   "main": "dist/index.js",
   "scripts": {
-    "test:health-check": "mocha -r ts-node/register/transpile-only ./test/health-check/*.test.ts",
-    "start:dev": "tsc && node dist/index.js"
+    "build": "tsc",
+    "start:dev": "tsc && node dist/index.js",
+    "test:health-check": "mocha -r ts-node/register/transpile-only ./test/health-check/*.test.ts"
   },
   "repository": {
     "type": "git",
