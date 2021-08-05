@@ -1,4 +1,4 @@
-import Flex from './flex';
+import { Flex, FlexCheckInStatus } from './flex';
 import * as dotenv from 'dotenv';
 dotenv.config();
 

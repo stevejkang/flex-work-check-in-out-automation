@@ -6,7 +6,7 @@ interface IFlexToken {
   refreshToken: String,
 }
 
-enum FlexCheckInStatus {
+export enum FlexCheckInStatus {
   BEFORE_CHECK_IN = 'BEFORE_CHECK_IN',
   WORKING = 'WORKING',
   AFTER_CHECK_OUT = 'AFTER_CHECK_OUT',
@@ -17,7 +17,7 @@ const DEFAULT_HEADER = {
   'Origin': 'https://flex.team',
 };
 
-class Flex {
+export class Flex {
   userStatus: FlexCheckInStatus = FlexCheckInStatus.UNKNOWN;
   constructor(
     private readonly username: String,
@@ -120,5 +120,3 @@ class FlexError extends Error {
     this.name = 'FlexError';
   }
 }
-
-export default Flex;
