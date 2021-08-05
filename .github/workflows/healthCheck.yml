@@ -22,5 +22,7 @@ jobs:
           touch .env
           echo USERNAME=${{ secrets.USERNAME }} >> .env
           echo PASSWORD=${{ secrets.PASSWORD }} >> .env
+          echo CHECKIN_CRON_RULE=${{ secrets.CHECKIN_CRON_RULE }} >> .env
+          echo CHECKOUT_CRON_RULE=${{ secrets.CHECKOUT_CRON_RULE }} >> .env
       - name: Run health check
         run: yarn test:health-check
