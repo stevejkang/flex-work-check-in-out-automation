@@ -22,7 +22,7 @@ schedule.scheduleJob(process.env.CHECKOUT_CRON_RULE as string, async () => {
   try {
     const FlexInstance = await Flex.createNew(username, password);
     const { userStatus } = FlexInstance;
-    if (userStatus === FlexCheckInStatus.WORKING) await FlexInstance.checkIn();
+    if (userStatus === FlexCheckInStatus.WORKING) await FlexInstance.checkOut();
   } catch (error) {
     console.log(error);
   }
