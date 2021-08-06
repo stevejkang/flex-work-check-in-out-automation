@@ -9,7 +9,7 @@ A Flex work check in and out automation script, written in typescript.
 $ git clone https://github.com/stevejkang/flex-work-check-in-out-automation.git
 $ cd flex-work-check-in-out-automation
 $ yarn && yarn build
-$ cp env.example .env
+$ cp .env.example .env
 $ vim .env
 $ pm2 start dist/index.js
 ```
