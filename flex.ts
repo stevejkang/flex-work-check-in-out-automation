@@ -112,6 +112,44 @@ export class Flex {
       throw new FlexError('Check Out Error');
     }
   }
+
+  public async getTodayWorkPlan(): Promise<void> {
+    const userTokenInfo = await this.login();
+    try {
+      const request = await axios.get('https://amen.flex.team/actions/time-tracking/schedule/now', {
+        headers: {
+          ...DEFAULT_HEADER,
+          'x-flex-aid': userTokenInfo.accessToken,
+          'x-flex-rid': userTokenInfo.refreshToken,
+        },
+      });
+
+      const response = request.data;
+      const today = dayjs(new Date()).format('YYYY-MM-DD');
+      const todayIndex = this.dayjsDayConverter(dayjs(new Date()).day());
+      if (!response.modifiableDates.includes(today)) {
+        throw new FlexError('Today work plan is not modifiable.');
+      }
+
+      if (!response.data[todayIndex].isTargetWorkingDay) {
+        throw new FlexError('Today is not woring day.');
+      }
+
+      if (response.data[todayIndex].timeSchedules.length === 0) {
+        throw new FlexError('Sehedule must be registered. You can register work or time-off plan on your desktop.');
+      }
+
+      console.log(response.data[todayIndex].timeSchedules);
+    } catch (error) {
+      throw new FlexError('Work Plan Retrieve Error');
+    }
+  }
+
+  // Make return 0 on Monday
+  private dayjsDayConverter(day: number): number {
+    if (day === 0) return 6;
+    else return day - 1;
+  }
 }
 
 class FlexError extends Error {
