@@ -6,6 +6,21 @@ interface IFlexToken {
   refreshToken: String,
 }
 
+interface IFlexTimeSchedule {
+  range: IFlexTimeScheduleRange[],
+  workType: string;
+}
+
+interface IFlexTimeScheduleRange {
+  year: number;
+  month: number;
+  day: number;
+  ampm: string;
+  hours: string;
+  minutes: string;
+  seconds: string;
+}
+
 export enum FlexCheckInStatus {
   BEFORE_CHECK_IN = 'BEFORE_CHECK_IN',
   WORKING = 'WORKING',
@@ -113,7 +128,7 @@ export class Flex {
     }
   }
 
-  public async getTodayWorkPlan(): Promise<void> {
+  public async getTodayWorkPlan(): Promise<IFlexTimeScheduleRange[]> {
     const userTokenInfo = await this.login();
     try {
       const request = await axios.get('https://amen.flex.team/actions/time-tracking/schedule/now', {
@@ -127,6 +142,7 @@ export class Flex {
       const response = request.data;
       const today = dayjs(new Date()).format('YYYY-MM-DD');
       const todayIndex = this.dayjsDayConverter(dayjs(new Date()).day());
+
       if (!response.modifiableDates.includes(today)) {
         throw new FlexError('Today work plan is not modifiable.');
       }
@@ -135,12 +151,25 @@ export class Flex {
         throw new FlexError('Today is not woring day.');
       }
 
-      if (response.data[todayIndex].timeSchedules.length === 0) {
-        throw new FlexError('Sehedule must be registered. You can register work or time-off plan on your desktop.');
+      const timeSchedules: IFlexTimeSchedule[] = response.data[todayIndex].timeSchedules;
+
+      if (timeSchedules.length === 0) {
+        throw new FlexError('Schedule must be registered. You can register work or time-off plan on your desktop.');
       }
 
-      console.log(response.data[todayIndex].timeSchedules);
+      const workSchedule = timeSchedules.filter(schedule => schedule.workType !== 'TIME_OFF');
+
+      if (workSchedule.length === 0) {
+        throw new FlexError('Go to home and take some rest!');
+      }
+
+      if (workSchedule.length > 1) {
+        throw new FlexError('Two work plans in a day is not allowed.')
+      }
+
+      return workSchedule[0].range;
     } catch (error) {
+      console.log(error);
       throw new FlexError('Work Plan Retrieve Error');
     }
   }
