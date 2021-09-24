@@ -168,9 +168,8 @@ export class Flex {
       }
 
       return workSchedule[0].range;
-    } catch (error) {
-      console.log(error);
-      throw new FlexError('Work Plan Retrieve Error');
+    } catch (error: any) {
+      throw new FlexError(`Work Plan Retrieve Error: ${error.message}`);
     }
   }
 
