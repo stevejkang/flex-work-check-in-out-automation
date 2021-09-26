@@ -11,7 +11,6 @@ $ cd flex-work-check-in-out-automation
 $ yarn && yarn build
 $ cp .env.example .env
 $ vim .env
-$ pm2 start dist/index.js
 ```
 
 ## Core API
@@ -22,3 +21,5 @@ $ pm2 start dist/index.js
 ### `FlexInstance.checkIn()`: Call check-in api.
 
 ### `FlexInstance.checkOut()`: Call check-out api.
+
+### `FlexInstance.getTodayWorkPlan()`: Retrieve today work plan.
